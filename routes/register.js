@@ -16,7 +16,7 @@ router.post('/', (req, res) => {
 
   newRegistration.save()
     .then(() => {
-      res.redirect('/login');
+      res.redirect('/');
     })
     .catch((error) => {
       console.error('Error saving registration:', error);
