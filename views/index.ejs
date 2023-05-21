@@ -6,6 +6,11 @@
 </head>
 <body>
   <h2>User Details</h2>
+  <div class="mb-3">
+    <label for="searchLastName" class="form-label">Search Last Name:</label>
+    <input type="text" id="searchLastName" class="form-control" placeholder="Enter last name">
+  </div>
+  
   <table class="table caption-top">
     <caption>Number Of Users: <%= personals.length %></caption>
     <thead>
@@ -23,7 +28,7 @@
         <th>Action</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="userTableBody">
       <% personals.forEach((personal) => { %>
         <tr>
           <td><%= personal.fname %></td>
@@ -46,6 +51,23 @@
       <% }) %>
     </tbody>
   </table>
+  <script>
+    // Retrieve the HTML elements
+    const searchLastNameInput = document.getElementById('searchLastName');
+    const userTableBody = document.getElementById('userTableBody');
+  
+    // Event listener for the input event on the search input field
+    searchLastNameInput.addEventListener('input', () => {
+      const searchTerm = searchLastNameInput.value.trim().toLowerCase();
+  
+      // Loop through each row and show/hide based on search term
+      Array.from(userTableBody.getElementsByTagName('tr')).forEach((row) => {
+        const lastName = row.getElementsByTagName('td')[2].innerText.toLowerCase();
+        row.style.display = lastName.includes(searchTerm) ? 'table-row' : 'none';
+      });
+    });
+  </script>
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
