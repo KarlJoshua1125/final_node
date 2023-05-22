@@ -1,58 +1,159 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>User Details</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css">
 </head>
+<style>
+  html,
+  body,
+  .intro {
+    height: 100%;
+  }
+
+  table td,
+  table th {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .card {
+    border-radius: .5rem;
+  }
+
+  .table-scroll {
+    border-radius: .5rem;
+    height: 500px;
+    /* Adjust the height as per your requirement */
+    overflow-y: auto;
+  }
+
+  thead {
+    top: 0;
+    position: sticky;
+  }
+
+  /* Added CSS for fixing table size */
+  .fixed-table {
+    height: 500px; /* Adjust the height as per your requirement */
+    overflow: auto;
+  }
+</style>
+
 <body>
-  <h2>User Details</h2>
-  <div class="mb-3">
-    <label for="searchLastName" class="form-label">Search Last Name:</label>
-    <input type="text" id="searchLastName" class="form-control" placeholder="Enter last name">
-  </div>
-  <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</button>
-  <table class="table caption-top">
-    <caption>Number Of Users: <%= personals.length %></caption>
-    <thead>
-      <tr>
-        <th>First Name</th>
-        <th>Middle Name</th>
-        <th>Last Name</th>
-        <th>Gender</th>
-        <th>Address</th>
-        <th>Region</th>
-        <th>City</th>
-        <th>Civil Status</th>
-        <th>Zipcode</th>
-        <th>Hobby</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody id="userTableBody">
-      <% personals.forEach((personal) => { %>
-        <tr>
-          <td><%= personal.fname %></td>
-          <td><%= personal.mname %></td>
-          <td><%= personal.lname %></td>
-          <td><%= personal.gender %></td>
-          <td><%= personal.address %></td>
-          <td><%= personal.region %></td>
-          <td><%= personal.city %></td>
-          <td><%= personal.civilstatus %></td>
-          <td><%= personal.zipcode %></td>
-          <td><%= personal.hobby %></td>
-          <td>
-            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal<%= personal._id %>">Edit</a>
-            <form action="/personal/delete/<%= personal._id %>" method="POST" style="display: inline;">
-              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-            </form>
-          </td>
-        </tr>
-      <% }) %>
-    </tbody>
-  </table>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">User Details</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/index">Home</a>
+          </li>
+        </ul>
+      </div>
 
+      <div class="collapse navbar-collapse" id="navbarNav">
 
+      </div>
+      <div class="ms-auto">
+
+        <input type="text" id="searchLastName" class="form-control form-control-sm" placeholder="Enter last name">
+
+      </div>
+      <div class="ms-auto">
+
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Logout</a>
+          </li>
+        </ul>
+
+      </div>
+
+    </div>
+  </nav>
+
+  <section class="intro">
+    <div class="bg-image h-100"
+      style="background-image: url('https://mdbootstrap.com/img/Photos/new-templates/tables/img2.jpg');">
+      <div class="mask d-flex align-items-center h-100" style="background-color: rgba(0,0,0,.25);">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-12">
+              <div class="card bg-dark shadow-2-strong">
+                <div class="card-body">
+                  <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</button>
+                  <div class="table-scroll fixed-table"> <!-- Added 'fixed-table' class -->
+                    <table class="table table-dark table-striped mb-0">
+                      <thead>
+                        <tr>
+                          <th scope="col">First Name</th>
+                          <th scope="col">Middle Name</th>
+                          <th scope="col">Last Name</th>
+                          <th scope="col">Gender</th>
+                          <th scope="col">Address</th>
+                          
+                          <th scope="col">Civil Status</th>
+                          <th scope="col">Zipcode</th>
+                          <th scope="col">Hobby</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody id="userTableBody">
+                        <% personals.forEach((personal)=> { %>
+                          <tr>
+                            <td>
+                              <%= personal.fname %>
+                            </td>
+                            <td>
+                              <%= personal.mname %>
+                            </td>
+                            <td>
+                              <%= personal.lname %>
+                            </td>
+                            <td>
+                              <%= personal.gender %>
+                            </td>
+                            <td>
+                              <%= personal.address %>
+                            </td>
+                           
+                            <td>
+                              <%= personal.civilstatus %>
+                            </td>
+                            <td>
+                              <%= personal.zipcode %>
+                            </td>
+                            <td>
+                              <%= personal.hobby %>
+                            </td>
+                            <td>
+                              <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#editModal<%= personal._id %>">Edit</a>
+                              <form action="/personal/delete/<%= personal._id %>" method="POST"
+                                style="display: inline;">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                              </form>
+                            </td>
+                          </tr>
+                          <% }) %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
   <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -66,37 +167,37 @@
               <label for="fname" class="form-label">First Name:</label>
               <input type="text" name="fname" id="fname" class="form-control" required>
             </div>
-        
+
             <div class="mb-3">
               <label for="mname" class="form-label">Middle Name:</label>
               <input type="text" name="mname" id="mname" class="form-control" required>
             </div>
-        
+
             <div class="mb-3">
               <label for="lname" class="form-label">Last Name:</label>
               <input type="text" name="lname" id="lname" class="form-control" required>
             </div>
-        
+
             <div class="mb-3">
               <label for="gender" class="form-label">Gender:</label>
               <input type="text" name="gender" id="gender" class="form-control" required>
             </div>
-            
+
             <div class="mb-3">
               <label for="address" class="form-label">Address:</label>
               <input type="text" name="address" id="address" class="form-control" required>
             </div>
-        
+
             <div class="mb-3">
               <label for="region" class="form-label">Region:</label>
               <input type="text" name="region" id="region" class="form-control" required>
             </div>
-        
+
             <div class="mb-3">
               <label for="city" class="form-label">City:</label>
               <input type="text" name="city" id="city" class="form-control" required>
             </div>
-        
+
             <div class="mb-3">
               <label for="civilstatus" class="form-label">Civil Status:</label>
               <select name="civilstatus" id="civilstatus" class="form-control" required>
@@ -106,17 +207,17 @@
                 <option value="Separated">Separated</option>
               </select>
             </div>
-        
+
             <div class="mb-3">
               <label for="zipcode" class="form-label">Zipcode:</label>
               <input type="number" name="zipcode" id="zipcode" class="form-control" required>
             </div>
-        
+
             <div class="mb-3">
               <label for="hobby" class="form-label">Hobby:</label>
               <input type="text" name="hobby" id="hobby" class="form-control" required>
             </div>
-        
+
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
         </div>
@@ -125,8 +226,9 @@
   </div>
 
 
-  <% personals.forEach((personal) => { %>
-    <div class="modal fade" id="editModal<%= personal._id %>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <% personals.forEach((personal)=> { %>
+    <div class="modal fade" id="editModal<%= personal._id %>" tabindex="-1" aria-labelledby="editModalLabel"
+      aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
@@ -137,27 +239,33 @@
             <form action="/personal/update/<%= personal._id %>" method="POST">
               <div class="mb-3">
                 <label for="editFname" class="form-label">First Name:</label>
-                <input type="text" id="editFname" name="fname" class="form-control" value="<%= personal.fname %>" required>
+                <input type="text" id="editFname" name="fname" class="form-control" value="<%= personal.fname %>"
+                  required>
               </div>
               <div class="mb-3">
                 <label for="editmname" class="form-label">Middle Name:</label>
-                <input type="text" id="editmname" name="mname" class="form-control" value="<%= personal.mname %>" required>
+                <input type="text" id="editmname" name="mname" class="form-control" value="<%= personal.mname %>"
+                  required>
               </div>
               <div class="mb-3">
                 <label for="editlname" class="form-label">Last Name:</label>
-                <input type="text" id="editlname" name="lname" class="form-control" value="<%= personal.lname %>" required>
+                <input type="text" id="editlname" name="lname" class="form-control" value="<%= personal.lname %>"
+                  required>
               </div>
               <div class="mb-3">
                 <label for="editgender" class="form-label">Gender:</label>
-                <input type="text" id="editgender" name="gender" class="form-control" value="<%= personal.gender %>" required>
+                <input type="text" id="editgender" name="gender" class="form-control" value="<%= personal.gender %>"
+                  required>
               </div>
               <div class="mb-3">
                 <label for="editaddress" class="form-label">Address:</label>
-                <input type="text" id="editaddress" name="address" class="form-control" value="<%= personal.address %>" required>
+                <input type="text" id="editaddress" name="address" class="form-control" value="<%= personal.address %>"
+                  required>
               </div>
               <div class="mb-3">
                 <label for="editregion" class="form-label">Region:</label>
-                <input type="text" id="editregion" name="region" class="form-control" value="<%= personal.region %>" required>
+                <input type="text" id="editregion" name="region" class="form-control" value="<%= personal.region %>"
+                  required>
               </div>
               <div class="mb-3">
                 <label for="editcity" class="form-label">City:</label>
@@ -165,43 +273,47 @@
               </div>
               <div class="mb-3">
                 <label for="editcivilstatus" class="form-label">Civil Status:</label>
-                <input type="text" id="editcivilstatus" name="civilstatus" class="form-control" value="<%= personal.civilstatus %>" required>
+                <input type="text" id="editcivilstatus" name="civilstatus" class="form-control"
+                  value="<%= personal.civilstatus %>" required>
               </div>
               <div class="mb-3">
                 <label for="editzipcode" class="form-label">Zipcode:</label>
-                <input type="text" id="editzipcode" name="zipcode" class="form-control" value="<%= personal.zipcode %>" required>
+                <input type="text" id="editzipcode" name="zipcode" class="form-control" value="<%= personal.zipcode %>"
+                  required>
               </div>
               <div class="mb-3">
                 <label for="edithobby" class="form-label">Hobby:</label>
-                <input type="text" id="edithobby" name="hobby" class="form-control" value="<%= personal.hobby %>" required>
+                <input type="text" id="edithobby" name="hobby" class="form-control" value="<%= personal.hobby %>"
+                  required>
               </div>
               <!-- Repeat the above div structure for other fields -->
-      
+
               <button type="submit" class="btn btn-primary">Save Changes</button>
             </form>
           </div>
         </div>
       </div>
     </div>
-  <% }) %>
+    <% }) %>
 
-  <script>
-    // Retrieve the HTML elements
-    const searchLastNameInput = document.getElementById('searchLastName');
-    const userTableBody = document.getElementById('userTableBody');
-  
-    // Event listener for the input event on the search input field
-    searchLastNameInput.addEventListener('input', () => {
-      const searchTerm = searchLastNameInput.value.trim().toLowerCase();
-  
-      // Loop through each row and show/hide based on search term
-      Array.from(userTableBody.getElementsByTagName('tr')).forEach((row) => {
-        const lastName = row.getElementsByTagName('td')[2].innerText.toLowerCase();
-        row.style.display = lastName.includes(searchTerm) ? 'table-row' : 'none';
-      });
-    });
-  </script>
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.bundle.min.js"></script>
+      <script>
+        // Retrieve the HTML elements
+        const searchLastNameInput = document.getElementById('searchLastName');
+        const userTableBody = document.getElementById('userTableBody');
+
+        // Event listener for the input event on the search input field
+        searchLastNameInput.addEventListener('input', () => {
+          const searchTerm = searchLastNameInput.value.trim().toLowerCase();
+
+          // Loop through each row and show/hide based on search term
+          Array.from(userTableBody.getElementsByTagName('tr')).forEach((row) => {
+            const lastName = row.getElementsByTagName('td')[2].innerText.toLowerCase();
+            row.style.display = lastName.includes(searchTerm) ? 'table-row' : 'none';
+          });
+        });
+      </script>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
