@@ -12,6 +12,8 @@ var loginRouter = require('./routes/login');
 var app = express();
 const Registration = require('./models/register');
 const Login = require('./models/login');
+const managerDashboardRouter = require('./routes/managerDashboard');
+const userDashboardRouter = require('./routes/userDashboard');
 
 // Connect to MongoDB
 mongoose
@@ -41,10 +43,12 @@ app.use(bodyParser.json());
 // Routes
 app.use('/register', registerRouter);
 app.use('/', loginRouter);
+app.use('/manager-dashboard', managerDashboardRouter);
+app.use('/user-dashboard', userDashboardRouter);
 
 
 // POST route to handle form submission
-app.post('/personal', (req, res) => {
+app.post('/index', (req, res) => {
   const {
     fname,
     mname,
@@ -76,7 +80,7 @@ app.post('/personal', (req, res) => {
   newPersonal
     .save()
     .then(() => {
-      res.redirect('/personal'); // Redirect to a route that lists all registers
+      res.redirect('/index'); // Redirect to a route that lists all registers
     })
     .catch((error) => {
       console.error('Error saving register:', error);

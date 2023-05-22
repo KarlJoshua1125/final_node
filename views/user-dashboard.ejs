@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Details</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css">
+</head>
+<body>
+  <h2>User Details</h2>
+  <table class="table caption-top">
+    <caption>Number Of Users: <%= personals.length %></caption>
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Middle Name</th>
+        <th>Last Name</th>
+        <th>Gender</th>
+        <th>Address</th>
+        <th>Region</th>
+        <th>City</th>
+        <th>Civil Status</th>
+        <th>Zipcode</th>
+        <th>Hobby</th>  
+      </tr>
+    </thead>
+    <tbody id="userTableBody">
+      <% personals.forEach((personal) => { %>
+        <tr>
+          <td><%= personal.fname %></td>
+          <td><%= personal.mname %></td>
+          <td><%= personal.lname %></td>
+          <td><%= personal.gender %></td>
+          <td><%= personal.address %></td>
+          <td><%= personal.region %></td>
+          <td><%= personal.city %></td>
+          <td><%= personal.civilstatus %></td>
+          <td><%= personal.zipcode %></td>
+          <td><%= personal.hobby %></td>
+        
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

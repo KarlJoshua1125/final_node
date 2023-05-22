@@ -25,8 +25,17 @@ router.post('/login', (req, res) => {
         return res.render('login', { errorMessage: 'Invalid password' });
       }
 
-      // User is registered and password is valid, redirect to dashboard
-      res.redirect('/personal');
+      // User is registered and password is valid, redirect to appropriate dashboard
+      if (registration.role === 'admin') {
+        return res.redirect('/index');
+      } else if (registration.role === 'manager') {
+        return res.redirect('/manager-dashboard');
+      } else if (registration.role === 'user') {
+        return res.redirect('/user-dashboard');
+      } else {
+        // Invalid role
+        return res.status(500).send('Internal Server Error');
+      }
     })
     .catch((error) => {
       console.error('Error finding registration:', error);

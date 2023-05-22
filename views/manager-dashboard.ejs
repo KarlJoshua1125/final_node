@@ -6,11 +6,6 @@
 </head>
 <body>
   <h2>User Details</h2>
-  <div class="mb-3">
-    <label for="searchLastName" class="form-label">Search Last Name:</label>
-    <input type="text" id="searchLastName" class="form-control" placeholder="Enter last name">
-  </div>
-  <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</button>
   <table class="table caption-top">
     <caption>Number Of Users: <%= personals.length %></caption>
     <thead>
@@ -43,87 +38,12 @@
           <td><%= personal.hobby %></td>
           <td>
             <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal<%= personal._id %>">Edit</a>
-            <form action="/personal/delete/<%= personal._id %>" method="POST" style="display: inline;">
-              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-            </form>
+            
           </td>
         </tr>
       <% }) %>
     </tbody>
   </table>
-
-
-  <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addUserModalLabel">Add User</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form action="/index" method="POST">
-            <div class="mb-3">
-              <label for="fname" class="form-label">First Name:</label>
-              <input type="text" name="fname" id="fname" class="form-control" required>
-            </div>
-        
-            <div class="mb-3">
-              <label for="mname" class="form-label">Middle Name:</label>
-              <input type="text" name="mname" id="mname" class="form-control" required>
-            </div>
-        
-            <div class="mb-3">
-              <label for="lname" class="form-label">Last Name:</label>
-              <input type="text" name="lname" id="lname" class="form-control" required>
-            </div>
-        
-            <div class="mb-3">
-              <label for="gender" class="form-label">Gender:</label>
-              <input type="text" name="gender" id="gender" class="form-control" required>
-            </div>
-            
-            <div class="mb-3">
-              <label for="address" class="form-label">Address:</label>
-              <input type="text" name="address" id="address" class="form-control" required>
-            </div>
-        
-            <div class="mb-3">
-              <label for="region" class="form-label">Region:</label>
-              <input type="text" name="region" id="region" class="form-control" required>
-            </div>
-        
-            <div class="mb-3">
-              <label for="city" class="form-label">City:</label>
-              <input type="text" name="city" id="city" class="form-control" required>
-            </div>
-        
-            <div class="mb-3">
-              <label for="civilstatus" class="form-label">Civil Status:</label>
-              <select name="civilstatus" id="civilstatus" class="form-control" required>
-                <option value="Single">Single</option>
-                <option value="Married">Married</option>
-                <option value="Widowed">Widowed</option>
-                <option value="Separated">Separated</option>
-              </select>
-            </div>
-        
-            <div class="mb-3">
-              <label for="zipcode" class="form-label">Zipcode:</label>
-              <input type="number" name="zipcode" id="zipcode" class="form-control" required>
-            </div>
-        
-            <div class="mb-3">
-              <label for="hobby" class="form-label">Hobby:</label>
-              <input type="text" name="hobby" id="hobby" class="form-control" required>
-            </div>
-        
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
 
   <% personals.forEach((personal) => { %>
     <div class="modal fade" id="editModal<%= personal._id %>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">

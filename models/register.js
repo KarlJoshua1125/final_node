@@ -1,4 +1,3 @@
-// models/Registration.js
 const mongoose = require('mongoose');
 
 const registrationSchema = new mongoose.Schema({
@@ -8,6 +7,11 @@ const registrationSchema = new mongoose.Schema({
   },
   password: {
     type: String,
+    required: true
+  },
+  role: {
+    type: String,
+    enum: ['admin', 'manager', 'user'],
     required: true
   }
 });

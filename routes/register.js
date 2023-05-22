@@ -9,10 +9,10 @@ router.get('/', (req, res) => {
 
 // POST route to handle registration form submission
 router.post('/', (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, role } = req.body;
 
-  // Save the user to the database
-  const newRegistration = new Registration({ email, password });
+  // Save the user to the database with role information
+  const newRegistration = new Registration({ email, password, role });
 
   newRegistration.save()
     .then(() => {
