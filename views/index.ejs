@@ -21,6 +21,7 @@
 
   .card {
     border-radius: .5rem;
+    width: 1200px;
   }
 
   .table-scroll {
@@ -98,7 +99,8 @@
                           <th scope="col">Last Name</th>
                           <th scope="col">Gender</th>
                           <th scope="col">Address</th>
-                          
+                          <th scope="col">Region</th>
+                          <th scope="col">City</th>  
                           <th scope="col">Civil Status</th>
                           <th scope="col">Zipcode</th>
                           <th scope="col">Hobby</th>
@@ -122,6 +124,12 @@
                             </td>
                             <td>
                               <%= personal.address %>
+                            </td>
+                            <td>
+                              <%= personal.region %>
+                            </td>
+                            <td>
+                              <%= personal.city %>
                             </td>
                            
                             <td>
@@ -180,9 +188,14 @@
 
             <div class="mb-3">
               <label for="gender" class="form-label">Gender:</label>
-              <input type="text" name="gender" id="gender" class="form-control" required>
+              <select name="gender" id="gender" class="form-control" required>
+                <option value="" selected disabled>Select an option</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="not_specified">Prefer not to say</option>
+              </select>
             </div>
-
+            
             <div class="mb-3">
               <label for="address" class="form-label">Address:</label>
               <input type="text" name="address" id="address" class="form-control" required>
@@ -190,12 +203,34 @@
 
             <div class="mb-3">
               <label for="region" class="form-label">Region:</label>
-              <input type="text" name="region" id="region" class="form-control" required>
+              <select class="form-control" id="region" name="region" onchange="populateCities()">
+                <option value="">Select Region</option>
+                <option value="Ilocos Region">Region I - Ilocos Region</option>
+                <option value="Cagayan Valley">Region II – Cagayan Valley</option>
+                <option value="Central Luzon">Region III – Central Luzon</option>
+                <option value="Calabarzon">Region IV‑A – CALABARZON</option>
+                <option value="Mimaropa">MIMAROPA Region</option>
+                <option value="Bicol Region">Region V – Bicol Region</option>
+                <option value="Western Visayas">Region VI – Western Visayas</option>
+                <option value="Central Visayas">Region VII – Central Visayas</option>
+                <option value="Eastern Visayas">Region VIII – Eastern Visayas</option>
+                <option value="Zamboanga Peninsula">Region IX – Zamboanga Peninsula</option>
+                <option value="Northern Mindanao">Region X – Northern Mindanao</option>
+                <option value="Davao Region">Region XI – Davao Region</option>\
+                <option value="Soccsksargen">Region XII – SOCCSKSARGEN</option>
+                <option value="Caraga">Region XIII – Caraga</option>
+                <option value="National Capital Region">NCR – National Capital Region</option>
+                <option value="Cordillera Administrative Region">CAR – Cordillera Administrative Region</option>
+                <option value="Bangsamoro Autonomous Region in Muslim Mindanao">BARMM – Bangsamoro Autonomous Region in Muslim Mindanao</option>
+              </select>
+            <span class="error-message"id="region-error"></span>
             </div>
 
             <div class="mb-3">
               <label for="city" class="form-label">City:</label>
-              <input type="text" name="city" id="city" class="form-control" required>
+              <select class="form-control" id="city" name="city">
+                <option value="">Select City</option>
+              </select>
             </div>
 
             <div class="mb-3">
@@ -210,8 +245,9 @@
 
             <div class="mb-3">
               <label for="zipcode" class="form-label">Zipcode:</label>
-              <input type="number" name="zipcode" id="zipcode" class="form-control" required>
+              <input type="text" pattern="\d*" maxlength="4" name="zipcode" id="zipcode" class="form-control" required>
             </div>
+            
 
             <div class="mb-3">
               <label for="hobby" class="form-label">Hobby:</label>
@@ -311,6 +347,292 @@
             row.style.display = lastName.includes(searchTerm) ? 'table-row' : 'none';
           });
         });
+
+
+        
+    function populateCities() {
+      const regionSelect = document.getElementById('region');
+      const selectedRegion =
+      regionSelect.options[regionSelect.selectedIndex].value;
+    fetch(`https://sample-api.com/cities?region=${selectedRegion}`)
+    .then(response => response.json())
+    .then(data => {
+    const citySelect = document.getElementById('city');
+    citySelect.innerHTML = '<option value="">Select City</option>';
+    data.forEach(city => {
+    const option = document.createElement('option');
+    option.value = city.name;
+    option.textContent = city.name;
+    citySelect.appendChild(option);
+    });
+    })
+    .catch(error => console.error(error));
+    }
+
+    function populateCities() {
+var region = document.getElementById("region").value;
+var cities = [];
+switch (region) {
+case "Ilocos Region":
+cities = ["Alaminos",
+"Batac",
+"Candon",
+"Dagupan",
+"Laoag",
+"San Carlos",
+"San Fernando",
+"Urdaneta",
+"Vigan"
+];
+break;
+case "Cagayan Valley":
+cities = ["Cauayan",
+"Ilagan",
+"Santiago",
+"Tuguegarao City",
+];
+break;
+case "Central Luzon":
+cities = ["Angeles",
+"Balanga",
+"Bulacan",
+"Cabanatuan",
+"Gapan",
+"Mabalacat",
+"Malolos",
+"Meycauayan",
+"Muñoz",
+"Olongapo",
+"Palayan",
+"San Fernando",
+"San Jose del Monte",
+"Tarlac City",
+"Tuguegarao",
+"Valenzuela"
+];
+break;
+case "Calabarzon":
+cities = ["Antipolo",
+"Batangas City",
+"Biñan",
+"Cabuyao",
+"Calamba",
+"Dasmarinas",
+"General Trias",
+"Imus",
+"Lipa",
+"Los Baños",
+"San Pablo",
+"San Pedro",
+"Santa Rosa",
+"Tagaytay",
+"Tanauan",
+"Trece Martires"
+];
+break;
+case "Mimaropa":
+cities = ["Puerto Princesa City",
+"Calapan City",
+"San Jose",
+"Odiongan",
+"Roxas",
+"Romblon",
+"Sablayan",
+"Mamburao",
+"Abra de Ilog"
+];
+break;
+case "Bicol Region":
+cities = ["Legazpi", "Naga", "Tabaco", "Iriga",
+"Sorsogon"];
+break;
+case "Western Visayas":
+cities = ["Bacolod",
+"Iloilo",
+"Passi",
+"Roxas",
+"Bago",
+"Cadiz",
+"Escalante",
+"Himamaylan",
+"Kabankalan",
+"La Carlota",
+"Sagay",
+"San Carlos",
+"Silay",
+"Sipalay",
+"Talisay",
+"Victorias",
+"Kalibo",
+"Ibajay",
+"Culasi",
+"Boracay",
+"Jordan",
+"Nueva Valencia",
+"Anini-y",
+"San Jose de Buenavista",
+"Belison",
+"Patnongon",
+"Tibiao",
+"Barotac Nuevo",
+"Dingle",
+"Passi",
+"Estancia",
+"Carles",
+"Ajuy",
+"Lambunao",
+"Janiuay",
+"Pototan",
+"New Lucena",
+"Leon",
+"Cabatuan",
+"Guimbal",
+"Miagao",
+"San Joaquin",
+"Oton",
+"Tigbauan",
+"Sara",
+"Concepcion",
+"Pavia",
+"San Miguel",
+"Alimodian",
+"Leganes",
+"Zarraga",
+"Santa Barbara",
+"Calinog",
+"Dueñas",
+"Badiangan",
+"Banate",
+"Anilao",
+"Balasan",
+"Batad",
+"Estancia",
+"San Rafael",
+"Lemery",
+"Caluya",
+"Cuartero",
+"Dao",
+"Dumarao",
+"Jamindan",
+"Maayon",
+"Mambusao",
+"Panay",
+"Pontevedra",
+"President Roxas",
+"Sapian",
+"Sigma"
+];
+break;
+case "Central Visayas":
+cities = ["Cebu City",
+"Mandaue City",
+"Lapu-Lapu City",
+"Tagbilaran City",
+"Talisay City",
+"Danao City",
+"Toledo City",
+"Bogo City",
+"Carcar City",
+"Naga City",
+"Dumaguete City",
+"Bayawan City"
+];
+break;
+case "Eastern Visayas":
+cities = ["Tacloban",
+"Ormoc",
+"Baybay",
+"Catbalogan",
+"Borongan",
+"Calbayog",
+"Maasin",
+"Sogod",
+"Abuyog",
+"Hilongos",
+];
+break;
+case "Zamboanga Peninsula":
+cities = ["Zamboanga City", "Dipolog City", "DapitanCity", "Pagadian City", "Isabela City"];
+break;
+case "Northern Mindanao":
+cities = ["Cagayan de Oro",
+"Gingoog",
+"Iligan",
+"El Salvador",
+"Oroquieta",
+"Ozamiz",
+"Tangub",
+"Valencia",
+];
+break;
+case "Davao Region":
+cities = ["Davao City", "Tagum", "Panabo", "Digos",
+"Mati"];
+break;
+case "Soccsksargen":
+cities = ["General Santos", "Koronadal", "Kidapawan",
+"Cotabato City"];
+break;
+case "Caraga":
+cities = ["Butuan", "Surigao", "Bislig", "Tandag"];
+break;
+case "National Capital Region":
+cities = ["Caloocan City",
+"Las Piñas City",
+"Makati City",
+"Malabon City",
+"Mandaluyong City",
+"Manila City",
+"Marikina City",
+"Muntinlupa City",
+"Navotas City",
+"Parañaque City",
+"Pasay City",
+"Pasig City",
+"Quezon City",
+"San Juan City",
+"Taguig City",
+"Valenzuela City",
+];
+break;
+case "Cordillera Administrative Region":
+cities = ["Baguio",
+"Itogon",
+"Bangued",
+"La Trinidad",
+"Tuba",
+"Sagada",
+"Tabuk",
+"Buguias",
+];
+break;
+case "Bangsamoro Autonomous Region in Muslim Mindanao":
+cities = ["Basilan",
+"Maguindanao",
+"Palawan",
+"South Cotabato City",
+"Sulu",
+"Tawi-Tawi",
+"Zamboanga",
+];
+break;
+case "Bangsamoro":
+cities = ["Cotabato City", "Marawi", "Zamboanga City",
+"Isabela City", "Lamitan"];
+break;
+// add more cases for other regions
+default:
+cities = [];
+}
+var citySelect = document.getElementById("city");
+citySelect.innerHTML = "";
+cities.forEach(function (city) {
+var option = document.createElement("option");
+option.value = city;
+option.text = city;
+citySelect.add(option);
+});
+}
       </script>
 
       <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.bundle.min.js"></script>

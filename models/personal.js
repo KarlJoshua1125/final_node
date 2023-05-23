@@ -9,7 +9,7 @@ const registerpersonalSchema = new mongoose.Schema({
   region: String,
   city: String,
   civilstatus: String,
-  zipcode: Number,
+  zipcode: String,
   hobby: String
 });
 
