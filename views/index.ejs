@@ -3,7 +3,10 @@
 
 <head>
   <title>User Details</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
 </head>
 <style>
   html,
@@ -81,16 +84,20 @@
   </nav>
 
   <section class="intro">
-    <div class="bg-image h-100"
-      style="background-image: url('https://mdbootstrap.com/img/Photos/new-templates/tables/img2.jpg');">
+    <div class="bg-image h-100" style="background-image: url('https://mdbootstrap.com/img/Photos/new-templates/tables/img2.jpg');">
       <div class="mask d-flex align-items-center h-100" style="background-color: rgba(0,0,0,.25);">
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-12">
               <div class="card bg-dark shadow-2-strong">
                 <div class="card-body">
-                  <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</button>
-                  <div class="table-scroll fixed-table"> <!-- Added 'fixed-table' class -->
+                  <div class="d-flex justify-content-end mb-3">
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                      <i class="fas fa-plus"></i> Add User
+                    </button>
+                  </div>
+                  
+                  <div class="table-scroll fixed-table">
                     <table class="table table-dark table-striped mb-0">
                       <thead>
                         <tr>
@@ -142,12 +149,15 @@
                               <%= personal.hobby %>
                             </td>
                             <td>
-                              <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#editModal<%= personal._id %>">Edit</a>
-                              <form action="/personal/delete/<%= personal._id %>" method="POST"
-                                style="display: inline;">
-                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                              <a href="#" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#editModal<%= personal._id %>">
+                                <i class="fas fa-edit"></i><!-- Replace with the edit icon of your choice -->
+                              </a>
+                              <form action="/personal/delete/<%= personal._id %>" method="POST" style="display: inline;">
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                  <i class="fas fa-trash"></i> <!-- Replace "Delete" text with delete icon -->
+                                </button>
                               </form>
+                              
                             </td>
                           </tr>
                           <% }) %>

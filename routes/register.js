@@ -25,7 +25,6 @@ function encryptPassword(password) {
   return encryptedPassword;
 }
 
-
 // GET route to render the registration form
 router.get('/', (req, res) => {
   res.render('register', { errorMessage: null });
@@ -40,31 +39,32 @@ router.post('/', (req, res) => {
     return res.status(400).render('register', { errorMessage: 'Password should be at least 6 characters long and contain a special character.' });
   }
 
- // Check if email already exists in the database
- Registration.findOne({ email: email })
- .then((existingUser) => {
-   if (existingUser) {
-     return res.status(400).render('register', { errorMessage: 'Email is already in use.' });
-   }
+  // Check if email already exists in the database
+  Registration.findOne({ email: email })
+    .then((existingUser) => {
+      if (existingUser) {
+        return res.status(400).render('register', { errorMessage: 'Email is already in use.' });
+      }
 
-   // Encrypt the password using Caesar cipher
-   const encryptedPassword = encryptPassword(password);
+      // Encrypt the password using Caesar cipher
+      const encryptedPassword = encryptPassword(password);
 
-   // Save the user to the database with encrypted password and role information
-   const newRegistration = new Registration({ email, password: encryptedPassword, role });
+      // Save the user to the database with encrypted password and role information
+      const newRegistration = new Registration({ email, password: encryptedPassword, role });
 
-   newRegistration.save()
-     .then(() => {
-       res.redirect('/');
-     })
-     .catch((error) => {
-       console.error('Error saving registration:', error);
-       res.status(500).send('Internal Server Error');
-     });
- })
- .catch((error) => {
-   console.error('Error checking existing user:', error);
-   res.status(500).send('Internal Server Error');
- });
+      newRegistration.save()
+        .then(() => {
+          res.redirect('/');
+        })
+        .catch((error) => {
+          console.error('Error saving registration:', error);
+          res.status(500).send('Internal Server Error');
+        });
+    })
+    .catch((error) => {
+      console.error('Error checking existing user:', error);
+      res.status(500).send('Internal Server Error');
+    });
 });
+
 module.exports = router;
